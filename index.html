@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Obzidian Labs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&family=Exo+2:ital,wght@0,100;0,300;0,400;0,700;1,300&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-void:    #03060f;
+      --bg-deep:    #060d1f;
+      --bg-panel:   #0a1428;
+      --bg-card:    #0d1a35;
+      --border:     #112244;
+      --border-hi:  #1e3a6e;
+      --blue-core:  #1a7fd4;
+      --blue-glow:  #2196f3;
+      --blue-pale:  #4db8ff;
+      --cyan:       #00c9f0;
+      --grey-mid:   #4a6080;
+      --grey-dim:   #2a3550;
+      --text-prime: #d0e4f7;
+      --text-mid:   #8aaac8;
+      --text-dim:   #4a6080;
+      --accent-z:   #00d4ff;
+      --live:       #00e676;
+      --dev:        #ffc107;
+      --planned:    #7c8fa8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg-void);
+      color: var(--text-prime);
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,127,212,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,127,212,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── SCAN LINE OVERLAY ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.08) 2px,
+        rgba(0,0,0,0.08) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── NOISE LAYER ── */
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .page-wrap { position: relative; z-index: 3; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(3,6,15,0.8);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-prime);
+      text-decoration: none;
+    }
+    .nav-logo .z-char {
+      color: var(--accent-z);
+      text-shadow: 0 0 12px var(--accent-z), 0 0 28px rgba(0,212,255,0.4);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue-pale); }
+
+    .nav-badge {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--accent-z);
+      border: 1px solid rgba(0,212,255,0.3);
+      padding: 4px 10px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 120px 80px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-orb {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, rgba(26,127,212,0.15) 0%, rgba(0,200,255,0.05) 40%, transparent 70%);
+      filter: blur(40px);
+      animation: orbPulse 6s ease-in-out infinite;
+    }
+
+    @keyframes orbPulse {
+      0%, 100% { opacity: 0.7; transform: translateY(-50%) scale(1); }
+      50% { opacity: 1; transform: translateY(-50%) scale(1.08); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      color: var(--blue-core);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero-eyebrow::before {
+      content: '//';
+      color: var(--grey-mid);
+      margin-right: 8px;
+    }
+
+    .hero-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(4.5rem, 10vw, 9rem);
+      font-weight: 700;
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero-name .z-char {
+      color: var(--accent-z);
+      text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(0,212,255,0.3);
+      display: inline-block;
+      animation: zPulse 3s ease-in-out infinite;
+    }
+    @keyframes zPulse {
+      0%, 100% { text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(0,212,255,0.3); }
+      50% { text-shadow: 0 0 40px var(--accent-z), 0 0 100px rgba(0,212,255,0.5), 0 0 140px rgba(0,212,255,0.2); }
+    }
+
+    .hero-sub {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 300;
+      color: var(--grey-mid);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.55s forwards;
+    }
+
+    .hero-tagline {
+      margin-top: 32px;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--text-mid);
+      max-width: 520px;
+      line-height: 1.7;
+      border-left: 2px solid var(--blue-core);
+      padding-left: 20px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.7s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.9s forwards;
+    }
+
+    .btn-primary {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      background: var(--blue-core);
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: background 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--blue-glow);
+      box-shadow: 0 0 24px rgba(33,150,243,0.4);
+    }
+
+    .btn-ghost {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 13px 32px;
+      background: transparent;
+      color: var(--text-mid);
+      border: 1px solid var(--border-hi);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--blue-pale); border-color: var(--blue-core); }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      animation: fadeIn 1s 1.5s both;
+    }
+    .hero-scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--blue-core), transparent);
+      animation: scrollLine 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+      100% { opacity: 0; transform: scaleY(1); transform-origin: bottom; }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { position: relative; }
+
+    .section-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--blue-core);
+      margin-bottom: 12px;
+    }
+    .section-label::before { content: '[ '; color: var(--grey-dim); }
+    .section-label::after { content: ' ]'; color: var(--grey-dim); }
+
+    .section-heading {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-prime);
+      margin-bottom: 8px;
+    }
+
+    .section-rule {
+      width: 80px;
+      height: 2px;
+      background: linear-gradient(to right, var(--blue-core), transparent);
+      margin-bottom: 48px;
+    }
+
+    /* ── GALLERY ── */
+    #gallery {
+      padding: 100px 80px;
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .gallery-track-outer {
+      position: relative;
+      overflow: hidden;
+      margin-top: 40px;
+      border: 1px solid var(--border);
+    }
+
+    .gallery-track {
+      display: flex;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .gallery-slide {
+      min-width: 100%;
+      height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .gallery-bg {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-hex-grid {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+    }
+
+    .gallery-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .gallery-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      display: block;
+      filter: drop-shadow(0 0 20px currentColor);
+    }
+
+    .gallery-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .gallery-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .gallery-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .gallery-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--grey-dim);
+      cursor: pointer;
+      transition: background 0.3s, width 0.3s;
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+    .gallery-dot.active {
+      width: 24px;
+      background: var(--blue-core);
+      clip-path: none;
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      background: rgba(6,13,31,0.7);
+      border: 1px solid var(--border-hi);
+      color: var(--blue-pale);
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
+      backdrop-filter: blur(8px);
+    }
+    .gallery-arrow:hover { background: rgba(26,127,212,0.2); }
+    .gallery-arrow.left { left: 16px; }
+    .gallery-arrow.right { right: 16px; }
+
+    .gallery-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      height: 2px;
+      background: var(--blue-core);
+      animation: progressBar 5s linear infinite;
+      box-shadow: 0 0 8px var(--blue-core);
+    }
+    @keyframes progressBar {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    /* ── PRODUCTS ── */
+    #products {
+      padding: 100px 0;
+    }
+    .products-header {
+      padding: 0 80px;
+      margin-bottom: 60px;
+    }
+
+    .products-grid {
+      display: grid;
+      gap: 2px;
+      margin-top: 0;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--card-accent);
+      transition: height 0.4s ease;
+    }
+    .product-card:hover { border-color: var(--border-hi); }
+    .product-card:hover::before { height: 100%; }
+
+    .product-left { display: flex; flex-direction: column; }
+
+    .product-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      margin-bottom: 20px;
+      width: fit-content;
+      border: 1px solid;
+    }
+    .tag-active { color: var(--live); border-color: rgba(0,230,118,0.3); background: rgba(0,230,118,0.05); }
+    .tag-dev { color: var(--dev); border-color: rgba(255,193,7,0.3); background: rgba(255,193,7,0.05); }
+    .tag-planned { color: var(--planned); border-color: rgba(124,143,168,0.3); background: rgba(124,143,168,0.05); }
+    .tag-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .tag-active .tag-dot { animation: blink 1.2s ease-in-out infinite; }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
+
+    .product-number {
+      position: absolute;
+      top: 40px;
+      right: 48px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 5rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.025);
+      line-height: 1;
+      user-select: none;
+    }
+
+    .product-icon-wrap {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .product-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-prime);
+      margin-bottom: 6px;
+    }
+
+    .product-subtitle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 20px;
+    }
+
+    .product-desc {
+      font-size: 0.95rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .product-right {}
+
+    .product-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .product-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.6;
+    }
+
+    .product-bullets li::before {
+      content: '▸';
+      color: var(--card-accent);
+      font-size: 0.75rem;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      padding: 100px 80px;
+      background: var(--bg-deep);
+      border-top: 1px solid var(--border);
+    }
+
+    .services-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .services-left {}
+
+    .services-intro {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 36px;
+    }
+
+    .services-cta-block {
+      background: rgba(26,127,212,0.07);
+      border: 1px solid rgba(26,127,212,0.2);
+      padding: 28px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .services-cta-block::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, var(--blue-core), transparent);
+    }
+
+    .services-cta-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-prime);
+      margin-bottom: 16px;
+      letter-spacing: 0.03em;
+    }
+
+    .services-right {}
+
+    .capability-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .capability-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+      transition: color 0.2s;
+      cursor: default;
+    }
+    .capability-item:hover { color: var(--text-prime); }
+    .capability-item:first-child { border-top: 1px solid var(--border); }
+
+    .cap-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--blue-core);
+      margin-top: 2px;
+      flex-shrink: 0;
+      width: 28px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      padding: 72px 80px 40px;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-brand {}
+
+    .footer-logo {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-prime);
+      margin-bottom: 16px;
+      display: block;
+    }
+    .footer-logo .z-char {
+      color: var(--accent-z);
+      text-shadow: 0 0 12px var(--accent-z);
+    }
+
+    .footer-desc {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      max-width: 280px;
+    }
+
+    .footer-col-title {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--blue-core);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--blue-pale); }
+
+    .footer-contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .contact-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--blue-core);
+      text-transform: uppercase;
+      min-width: 60px;
+      margin-top: 1px;
+    }
+
+    .contact-value {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+    }
+    .contact-value a { color: var(--text-mid); text-decoration: none; }
+    .contact-value a:hover { color: var(--blue-pale); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-copy {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    .footer-build {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+    .footer-build span { color: var(--blue-core); }
+
+    /* ── CORNER DECORATIONS ── */
+    .corner-dec {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-color: var(--blue-core);
+      border-style: solid;
+      opacity: 0.5;
+    }
+    .corner-dec.tl { top: 12px; left: 12px; border-width: 1px 0 0 1px; }
+    .corner-dec.tr { top: 12px; right: 12px; border-width: 1px 1px 0 0; }
+    .corner-dec.bl { bottom: 12px; left: 12px; border-width: 0 0 1px 1px; }
+    .corner-dec.br { bottom: 12px; right: 12px; border-width: 0 1px 1px 0; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── HEXAGON BG SVG ── */
+    .hex-pattern {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      pointer-events: none;
+    }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      background: rgba(0,0,0,0.5);
+      border-bottom: 1px solid var(--border);
+      padding: 6px 80px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      overflow: hidden;
+    }
+    .status-item {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .status-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--live); animation: blink 2s infinite; }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      display: flex;
+      overflow: hidden;
+      flex: 1;
+    }
+    .ticker {
+      display: flex;
+      gap: 60px;
+      animation: ticker 30s linear infinite;
+      white-space: nowrap;
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg-void); }
+    ::-webkit-scrollbar-thumb { background: var(--border-hi); }
+
+    /* ════════════════════════════════════════
+       MOBILE HAMBURGER MENU
+    ════════════════════════════════════════ */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+      z-index: 200;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 100%;
+      height: 1px;
+      background: var(--text-mid);
+      transition: transform 0.3s ease, opacity 0.3s ease, background 0.2s;
+      transform-origin: center;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); background: var(--accent-z); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); background: var(--accent-z); }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 64px;
+      left: 0; right: 0;
+      background: rgba(3,6,15,0.97);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.4,0,0.2,1), padding 0.3s ease;
+    }
+    .mobile-menu.open {
+      max-height: 400px;
+      padding: 24px 0 32px;
+    }
+    .mobile-menu-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+    .mobile-menu-links li a {
+      display: block;
+      padding: 16px 28px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s, background 0.2s;
+    }
+    .mobile-menu-links li a:hover { color: var(--blue-pale); background: rgba(26,127,212,0.05); }
+    .mobile-menu-badge {
+      margin: 20px 28px 0;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--accent-z);
+      border: 1px solid rgba(0,212,255,0.3);
+      padding: 6px 12px;
+      display: inline-block;
+      letter-spacing: 0.1em;
+    }
+
+    /* ════════════════════════════════════════
+       TABLET  ≤ 1024px
+    ════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      /* nav */
+      nav { padding: 0 32px; }
+
+      /* hero */
+      .hero { padding: 110px 48px 80px; }
+      .hero-orb { width: 400px; height: 400px; right: -60px; }
+
+      /* sections */
+      #gallery { padding: 80px 48px; }
+      #products { padding: 80px 48px; }
+      #services { padding: 80px 48px; }
+      footer { padding: 60px 48px 36px; }
+      .status-bar { padding: 6px 48px; }
+
+      /* product card */
+      .product-card { padding: 36px; gap: 36px; }
+
+      /* services */
+      .services-inner { gap: 48px; }
+
+      /* footer */
+      .footer-top { gap: 40px; }
+    }
+
+    /* ════════════════════════════════════════
+       MOBILE  ≤ 768px
+    ════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* ── NAV ── */
+      nav { padding: 0 20px; height: 56px; }
+      .nav-links { display: none; }
+      .nav-badge { display: none; }
+      .nav-hamburger { display: flex; }
+      .mobile-menu { display: block; top: 56px; }
+      .nav-logo { font-size: 1.1rem; }
+
+      /* ── STATUS BAR ── */
+      .status-bar { padding: 6px 20px; gap: 16px; }
+      .status-item:not(:first-child):not(:nth-child(2)) { display: none; }
+
+      /* ── HERO ── */
+      .hero {
+        padding: 96px 24px 72px;
+        min-height: 100svh;
+        align-items: flex-start;
+      }
+      .hero-orb {
+        width: 280px;
+        height: 280px;
+        right: -60px;
+        top: 30%;
+        opacity: 0.5;
+      }
+      .hero-eyebrow { font-size: 0.62rem; margin-bottom: 16px; }
+      .hero-name { font-size: clamp(3.2rem, 15vw, 5.5rem); line-height: 0.9; }
+      .hero-sub { font-size: clamp(1rem, 4vw, 1.4rem); }
+      .hero-tagline {
+        margin-top: 24px;
+        font-size: 0.95rem;
+        max-width: 100%;
+        padding-left: 14px;
+      }
+      .hero-cta {
+        margin-top: 36px;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+      }
+      .btn-primary, .btn-ghost {
+        width: 100%;
+        text-align: center;
+        padding: 14px 20px;
+        clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+      }
+      .hero-scroll-hint { display: none; }
+
+      /* ── SECTION LABELS / HEADINGS ── */
+      .section-heading { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+      .section-rule { margin-bottom: 32px; }
+
+      /* ── GALLERY ── */
+      #gallery { padding: 60px 20px; }
+      .gallery-slide { height: 260px; }
+      .gallery-icon { font-size: 2.6rem; margin-bottom: 12px; }
+      .gallery-label { font-size: 1.2rem; }
+      .gallery-caption { font-size: 0.68rem; letter-spacing: 0.06em; }
+      .gallery-content { padding: 20px 16px; }
+      .gallery-arrow { width: 36px; height: 36px; font-size: 0.8rem; }
+      .gallery-arrow.left { left: 8px; }
+      .gallery-arrow.right { right: 8px; }
+
+      /* ── PRODUCTS ── */
+      #products { padding: 60px 0; }
+      .products-header { padding: 0 20px; margin-bottom: 36px; }
+      .product-card {
+        grid-template-columns: 1fr;
+        padding: 28px 20px;
+        gap: 24px;
+      }
+      .product-number { font-size: 3.5rem; top: 20px; right: 20px; }
+      .product-title { font-size: 1.25rem; }
+      .product-icon-wrap { font-size: 2rem; margin-bottom: 12px; }
+      .product-desc { font-size: 0.88rem; }
+      .product-bullets li { font-size: 0.85rem; }
+      /* hide corner decorations on mobile – too cramped */
+      .product-card .corner-dec { display: none; }
+
+      /* ── SERVICES ── */
+      #services { padding: 60px 20px; }
+      .services-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .services-intro { font-size: 0.95rem; }
+      .services-cta-text { font-size: 1.05rem; }
+      .services-cta-block { padding: 22px 20px; }
+      .capability-item { padding: 14px 0; font-size: 0.85rem; }
+
+      /* ── FOOTER ── */
+      footer { padding: 48px 20px 28px; }
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        margin-bottom: 36px;
+      }
+      .footer-desc { max-width: 100%; }
+      .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .footer-copy, .footer-build { font-size: 0.58rem; }
+    }
+
+    /* ════════════════════════════════════════
+       SMALL MOBILE  ≤ 420px
+    ════════════════════════════════════════ */
+    @media (max-width: 420px) {
+      .hero-name { font-size: clamp(2.8rem, 17vw, 4rem); }
+      .hero-eyebrow { font-size: 0.56rem; letter-spacing: 0.18em; }
+      .gallery-slide { height: 230px; }
+      .gallery-label { font-size: 1.05rem; }
+      .gallery-caption { display: none; }
+      .product-card { padding: 22px 16px; }
+      .nav-logo { font-size: 1rem; letter-spacing: 0.05em; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="page-wrap">
+
+    <!-- NAV -->
+    <nav id="topnav">
+      <a class="nav-logo" href="#">
+        OB<span class="z-char">Z</span>IDIAN LABS
+      </a>
+      <ul class="nav-links">
+        <li><a href="#gallery">Solutions</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-badge">v1.0 · Mumbai</div>
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+      <ul class="mobile-menu-links">
+        <li><a href="#gallery" class="mobile-nav-link">Solutions</a></li>
+        <li><a href="#products" class="mobile-nav-link">Products</a></li>
+        <li><a href="#services" class="mobile-nav-link">Services</a></li>
+        <li><a href="#contact" class="mobile-nav-link">Contact</a></li>
+      </ul>
+      <div class="mobile-menu-badge">v1.0 · Mumbai, India</div>
+    </div>
+
+    <!-- STATUS BAR -->
+    <div class="status-bar" style="margin-top:64px;">
+      <div class="status-item"><div class="status-dot"></div> Systems Online</div>
+      <div class="status-item">Products: 4</div>
+      <div class="ticker-wrap">
+        <div class="ticker" id="ticker-track"></div>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-orb"></div>
+
+      <svg class="hex-pattern" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <pattern id="hexPat" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+            <polygon points="30,2 58,17 58,45 30,52 2,45 2,17" fill="none" stroke="#1a7fd4" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#hexPat)"/>
+      </svg>
+
+      <div class="hero-eyebrow">Obzidian Labs · Product Engineering</div>
+      <h1 class="hero-name">
+        OB<span class="z-char">Z</span>IDIAN<br>
+        <span style="color:var(--text-mid); font-size:0.55em; letter-spacing:0.15em;">LABS</span>
+      </h1>
+      <p class="hero-sub" id="hero-tagline"></p>
+      <p class="hero-tagline">A product-first technology lab engineering precision tools for real-world problems — one solution at a time.</p>
+      <div class="hero-cta">
+        <a href="#products" class="btn-primary">Explore Products</a>
+        <a href="#services" class="btn-ghost">Work With Us</a>
+      </div>
+
+      <div class="hero-scroll-hint">Scroll</div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="section-label">Our Solutions</div>
+      <h2 class="section-heading">What We've Built</h2>
+      <div class="section-rule"></div>
+
+      <div class="gallery-track-outer" style="position:relative;">
+        <div class="corner-dec tl"></div>
+        <div class="corner-dec tr"></div>
+        <div class="corner-dec bl"></div>
+        <div class="corner-dec br"></div>
+
+        <div class="gallery-track" id="gallery-track"></div>
+        <button class="gallery-arrow left" id="gallery-prev">◀</button>
+        <button class="gallery-arrow right" id="gallery-next">▶</button>
+        <div class="gallery-progress" id="gallery-progress" key="gp"></div>
+      </div>
+
+      <div class="gallery-controls" id="gallery-dots"></div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+      <div class="products-header">
+        <div class="section-label">Product Suite</div>
+        <h2 class="section-heading">Solutions We've Built</h2>
+        <div class="section-rule"></div>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="services-inner reveal">
+        <div class="services-left">
+          <div class="section-label">Custom Development</div>
+          <h2 class="section-heading" id="services-heading"></h2>
+          <div class="section-rule"></div>
+          <p class="services-intro" id="services-intro"></p>
+          <div class="services-cta-block">
+            <p class="services-cta-text" id="services-cta"></p>
+            <a href="#contact" class="btn-primary">Start a Conversation</a>
+          </div>
+        </div>
+        <div class="services-right">
+          <ul class="capability-list" id="capability-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+      <div class="footer-top" id="footer-top"></div>
+      <div class="footer-bottom">
+        <div class="footer-copy" id="footer-copy"></div>
+        <div class="footer-build">Engineered by <span>Obzidian Labs</span> · Mumbai, India</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // ── LOAD DATA ──
+    async function loadData() {
+      try {
+        const res = await fetch('data.json');
+        if (!res.ok) throw new Error('fetch failed');
+        return await res.json();
+      } catch {
+        // fallback: use inline data for demo/local file opening
+        return FALLBACK_DATA;
+      }
+    }
+
+    // Fallback data (mirrors data.json exactly, for direct file:// opening)
+    const FALLBACK_DATA = {
+      company: {
+        name: "Obzidian Labs",
+        tagline: "We build to provide solutions — one product at a time.",
+        description: "A product-first technology lab engineering precision tools for real-world problems.",
+        contact: {
+          email: "hello@obzidianlabs.com",
+          twitter: "@ObzidianLabs",
+          github: "github.com/obzidianlabs",
+          location: "Mumbai, India"
+        }
+      },
+      gallery: [
+        { id:1, label:"Browser Extension Suite", caption:"To-Do & Timezone — Productivity in your browser", color:"#0066ff", icon:"🧩" },
+        { id:2, label:"Hindu Calendar App", caption:"Never miss an Ekadashi or Sankashti again", color:"#ff6600", icon:"🗓️" },
+        { id:3, label:"SMS Credit Tracker", caption:"AI-powered financial SMS summarization", color:"#00d4aa", icon:"💬" },
+        { id:4, label:"DataViz Desktop App", caption:"Private Excel analytics with dynamic graph generation", color:"#9b59b6", icon:"📊" },
+        { id:5, label:"Future Tools", caption:"More precision tools are being engineered at the lab", color:"#1a7fd4", icon:"⚗️" }
+      ],
+      products: [
+        {
+          id:1, tag:"LIVE", status:"active",
+          title:"Browser Extension — Todo & Timezone",
+          subtitle:"Productivity wired into your browser",
+          icon:"🧩", color:"#1a7fd4",
+          description:"A sleek, lightweight browser extension that supercharges your daily workflow without ever leaving your tab.",
+          bullets:[
+            "Inline to-do list with priority tagging and drag-to-reorder — no app switching needed",
+            "Real-time timezone converter supporting 100+ global zones — ideal for remote teams and freelancers",
+            "Zero-friction UI: lives in your browser toolbar, opens in a click",
+            "Data stored locally — no accounts, no servers, no tracking",
+            "Keyboard-first shortcuts for power users who hate their mouse"
+          ]
+        },
+        {
+          id:2, tag:"IN DEV", status:"dev",
+          title:"Hindu Calendar — Panchang Notifier",
+          subtitle:"Every sacred day, always in your pocket",
+          icon:"🗓️", color:"#e07b39",
+          description:"A beautifully designed mobile app that surfaces all major Hindu calendar events with smart, timely notifications.",
+          bullets:[
+            "Complete coverage of Ekadashi, Sankashti, Amavasya, Purnima, Navratri, and 50+ annual events",
+            "Location-aware Tithi calculation for accurate sunrise/sunset-based timing",
+            "Custom notification schedules — get reminded 1 day, 1 hour, or morning-of",
+            "Offline-first architecture: full calendar access without internet",
+            "Clean, minimal UI with dark and saffron themes"
+          ]
+        },
+        {
+          id:3, tag:"IN DEV", status:"dev",
+          title:"SMS Credit Tracker (SCT)",
+          subtitle:"Your bank statements, decoded automatically",
+          icon:"💬", color:"#00c9a7",
+          description:"An on-device, privacy-first Android app that reads your bank SMS messages and builds a clean financial summary — no cloud, no data sharing.",
+          bullets:[
+            "Regex + LLM hybrid engine parses messages from 20+ Indian banks and all major UPI apps",
+            "Auto-categorizes transactions: food, fuel, EMI, subscriptions, and more",
+            "Monthly and weekly spending summaries with visual breakdowns",
+            "100% on-device processing — your data never leaves your phone",
+            "Works with HDFC, SBI, ICICI, Axis, Kotak, PhonePe, GPay, Paytm, and more"
+          ]
+        },
+        {
+          id:4, tag:"PLANNED", status:"planned",
+          title:"DataViz Desktop — Private Analytics Engine",
+          subtitle:"Turn confidential Excel data into living dashboards",
+          icon:"📊", color:"#9b59b6",
+          description:"A desktop application powered by an LLM wrapper that reads your private Excel files and generates dynamic, interactive graphs — no upload, no exposure.",
+          bullets:[
+            "Drag-and-drop any .xlsx or .csv file — analysis begins instantly on your machine",
+            "LLM interprets your column headers and auto-selects the best chart types",
+            "Generate bar, line, scatter, pie, and waterfall charts from natural language prompts",
+            "Data never leaves your device — fully air-gapped processing pipeline",
+            "Export polished charts to PDF or PNG for presentations and reports"
+          ]
+        }
+      ],
+      services: {
+        heading: "What We Can Build For You",
+        intro: "Obzidian Labs isn't just a product studio — we take on custom builds. If you have a problem worth solving, we have engineers who love solving it. Here's what we bring to the table:",
+        capabilities: [
+          "Custom browser extensions tailored to your team's internal workflows",
+          "Mobile apps for Android and iOS — from concept to Play Store in weeks",
+          "LLM-powered automation tools that sit on top of your existing data",
+          "Privacy-first desktop applications that process sensitive data entirely on-device",
+          "API integrations, webhook pipelines, and backend microservices",
+          "Data visualization dashboards — interactive, embeddable, and beautiful",
+          "Regex and NLP engines for document parsing, SMS reading, and text extraction",
+          "Rapid prototyping: we move fast and ship MVPs you can actually test"
+        ],
+        cta: "Have a product idea? Let's talk."
+      }
+    };
+
+    // ── TICKER ──
+    function buildTicker(data) {
+      const items = [
+        `${data.company.name}`,
+        ...data.gallery.map(g => g.label),
+        'Custom Development Available',
+        'Mumbai · India',
+        'Privacy First · On-Device Processing',
+        'Android · Browser · Desktop · Mobile'
+      ];
+      const track = document.getElementById('ticker-track');
+      const doubled = [...items, ...items];
+      track.innerHTML = doubled.map(i =>
+        `<span class="status-item" style="color:var(--text-dim);">◆ ${i}</span>`
+      ).join('');
+    }
+
+    // ── HERO TAGLINE TYPEWRITER ──
+    function typewrite(el, text, speed = 40) {
+      let i = 0;
+      el.textContent = '';
+      const iv = setInterval(() => {
+        el.textContent += text[i++];
+        if (i >= text.length) clearInterval(iv);
+      }, speed);
+    }
+
+    // ── GALLERY ──
+    function buildGallery(slides) {
+      const track = document.getElementById('gallery-track');
+      const dotsEl = document.getElementById('gallery-dots');
+      let current = 0;
+      let timer;
+      let progressEl = document.getElementById('gallery-progress');
+
+      track.innerHTML = slides.map(s => `
+        <div class="gallery-slide" style="background: radial-gradient(ellipse at 60% 50%, ${s.color}22 0%, #030914 70%);">
+          <div class="gallery-bg">
+            <svg class="gallery-hex-grid" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+              <defs>
+                <pattern id="hx${s.id}" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
+                  <polygon points="30,2 58,17 58,45 30,52 2,45 2,17" fill="none" stroke="${s.color}" stroke-width="0.8"/>
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#hx${s.id})"/>
+            </svg>
+          </div>
+          <div class="gallery-content">
+            <span class="gallery-icon">${s.icon}</span>
+            <div class="gallery-label">${s.label}</div>
+            <div class="gallery-caption">${s.caption}</div>
+          </div>
+        </div>
+      `).join('');
+
+      dotsEl.innerHTML = slides.map((_, i) =>
+        `<div class="gallery-dot ${i === 0 ? 'active' : ''}" data-i="${i}"></div>`
+      ).join('');
+
+      function goTo(n) {
+        current = (n + slides.length) % slides.length;
+        track.style.transform = `translateX(-${current * 100}%)`;
+        document.querySelectorAll('.gallery-dot').forEach((d, i) => {
+          d.classList.toggle('active', i === current);
+        });
+        resetProgress();
+      }
+
+      function resetProgress() {
+        progressEl.style.animation = 'none';
+        void progressEl.offsetWidth;
+        progressEl.style.animation = 'progressBar 5s linear infinite';
+      }
+
+      function startTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 5000);
+      }
+
+      document.getElementById('gallery-prev').onclick = () => { goTo(current - 1); startTimer(); };
+      document.getElementById('gallery-next').onclick = () => { goTo(current + 1); startTimer(); };
+      dotsEl.querySelectorAll('.gallery-dot').forEach(d => {
+        d.onclick = () => { goTo(+d.dataset.i); startTimer(); };
+      });
+
+      startTimer();
+
+      // Touch swipe support for mobile
+      let touchStartX = 0;
+      const outer = document.querySelector('.gallery-track-outer');
+      outer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      outer.addEventListener('touchend', e => {
+        const diff = touchStartX - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) { goTo(current + (diff > 0 ? 1 : -1)); startTimer(); }
+      }, { passive: true });
+    }
+
+    // ── PRODUCTS ──
+    function buildProducts(products) {
+      const grid = document.getElementById('products-grid');
+      const tagClass = { active:'tag-active', dev:'tag-dev', planned:'tag-planned' };
+
+      grid.innerHTML = products.map((p, idx) => `
+        <div class="product-card reveal" style="--card-accent: ${p.color};" data-delay="${idx * 100}">
+          <div class="corner-dec tl"></div>
+          <div class="corner-dec tr"></div>
+          <div class="corner-dec bl"></div>
+          <div class="corner-dec br"></div>
+          <div class="product-number">0${p.id}</div>
+
+          <div class="product-left">
+            <div class="product-tag ${tagClass[p.status]}">
+              <div class="tag-dot"></div>${p.tag}
+            </div>
+            <span class="product-icon-wrap">${p.icon}</span>
+            <div class="product-title">${p.title}</div>
+            <div class="product-subtitle">${p.subtitle}</div>
+            <div class="product-desc">${p.description}</div>
+          </div>
+
+          <div class="product-right">
+            <ul class="product-bullets">
+              ${p.bullets.map(b => `<li>${b}</li>`).join('')}
+            </ul>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ── SERVICES ──
+    function buildServices(s) {
+      document.getElementById('services-heading').textContent = s.heading;
+      document.getElementById('services-intro').textContent = s.intro;
+      document.getElementById('services-cta').textContent = s.cta;
+
+      document.getElementById('capability-list').innerHTML = s.capabilities.map((c, i) => `
+        <li class="capability-item">
+          <span class="cap-num">${String(i+1).padStart(2,'0')}</span>
+          <span>${c}</span>
+        </li>
+      `).join('');
+    }
+
+    // ── FOOTER ──
+    function buildFooter(data) {
+      const c = data.company.contact;
+      document.getElementById('footer-top').innerHTML = `
+        <div class="footer-brand">
+          <span class="footer-logo">OB<span class="z-char">Z</span>IDIAN LABS</span>
+          <p class="footer-desc">${data.company.description}<br><br>Building precision tools that solve real problems — from Mumbai to the world.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-links">
+            <li><a href="#gallery">Solutions</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#services">Custom Dev</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div id="contact">
+          <div class="footer-col-title">Get In Touch</div>
+          <div class="footer-contact-item">
+            <span class="contact-label">Email</span>
+            <span class="contact-value"><a href="mailto:${c.email}">${c.email}</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="contact-label">Twitter</span>
+            <span class="contact-value">${c.twitter}</span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="contact-label">GitHub</span>
+            <span class="contact-value"><a href="https://${c.github}" target="_blank">${c.github}</a></span>
+          </div>
+          <div class="footer-contact-item">
+            <span class="contact-label">Base</span>
+            <span class="contact-value">${c.location}</span>
+          </div>
+        </div>
+      `;
+      document.getElementById('footer-copy').textContent =
+        `© ${new Date().getFullYear()} ${data.company.name}. All rights reserved.`;
+    }
+
+    // ── REVEAL ON SCROLL ──
+    function initReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((e, idx) => {
+          if (e.isIntersecting) {
+            const delay = e.target.dataset.delay || 0;
+            setTimeout(() => e.target.classList.add('visible'), +delay);
+            observer.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    }
+
+    // ── INIT ──
+    async function init() {
+      const data = await loadData();
+
+      buildTicker(data);
+      typewrite(document.getElementById('hero-tagline'), data.company.tagline, 45);
+      buildGallery(data.gallery);
+      buildProducts(data.products);
+      buildServices(data.services);
+      buildFooter(data);
+
+      // re-observe after dynamic content inserted
+      setTimeout(initReveal, 100);
+
+      // Sticky nav shrink
+      const nav = document.getElementById('topnav');
+      window.addEventListener('scroll', () => {
+        const isMobile = window.innerWidth <= 768;
+        nav.style.height = window.scrollY > 60 ? (isMobile ? '48px' : '52px') : (isMobile ? '56px' : '64px');
+      });
+
+      // Hamburger menu toggle
+      const hamburger = document.getElementById('nav-hamburger');
+      const mobileMenu = document.getElementById('mobile-menu');
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+      });
+      // Close menu when a link is tapped
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        });
+      });
+      // Close menu on outside click
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && !mobileMenu.contains(e.target)) {
+          hamburger.classList.remove('open');
+          mobileMenu.classList.remove('open');
+        }
+      });
+    }
+
+    init();
+  </script>
+</body>
+</html>

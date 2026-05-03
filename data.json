@@ -1,0 +1,135 @@
+{
+  "company": {
+    "name": "Obzidian Labs",
+    "tagline": "We build to provide solutions — one product at a time.",
+    "description": "A product-first technology lab engineering precision tools for real-world problems.",
+    "contact": {
+      "email": "hello@obzidianlabs.com",
+      "twitter": "@ObzidianLabs",
+      "github": "github.com/obzidianlabs",
+      "location": "Mumbai, India"
+    }
+  },
+  "gallery": [
+    {
+      "id": 1,
+      "label": "Browser Extension Daily Task Helper",
+      "caption": "To-Do & Timezone — Productivity in your browser",
+      "color": "#0066ff",
+      "icon": "🧩"
+    },
+    {
+      "id": 2,
+      "label": "Hindu Calendar App",
+      "caption": "Never miss an Ekadashi or Sankashti again",
+      "color": "#ff6600",
+      "icon": "🗓️"
+    },
+    {
+      "id": 3,
+      "label": "SMS Credit Tracker",
+      "caption": "AI-powered financial SMS summarization",
+      "color": "#00d4aa",
+      "icon": "💬"
+    },
+    {
+      "id": 4,
+      "label": "DataViz Desktop App",
+      "caption": "Private Excel analytics with dynamic graph generation",
+      "color": "#9b59b6",
+      "icon": "📊"
+    },
+    {
+      "id": 5,
+      "label": "Future Tools",
+      "caption": "More precision tools are being engineered at the lab",
+      "color": "#1a7fd4",
+      "icon": "⚗️"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "tag": "LIVE",
+      "status": "active",
+      "title": "Browser Extension — Todo & Timezone",
+      "subtitle": "Productivity wired into your browser",
+      "icon": "🧩",
+      "color": "#1a7fd4",
+      "description": "A sleek, lightweight browser extension that supercharges your daily workflow without ever leaving your tab.",
+      "bullets": [
+        "Inline to-do list with priority tagging and drag-to-reorder — no app switching needed",
+        "Real-time timezone converter supporting 100+ global zones — ideal for remote teams and freelancers",
+        "Zero-friction UI: lives in your browser toolbar, opens in a click",
+        "Data stored locally — no accounts, no servers, no tracking",
+        "Keyboard-first shortcuts for power users who hate their mouse"
+      ]
+    },
+    {
+      "id": 2,
+      "tag": "IN DEV",
+      "status": "dev",
+      "title": "Hindu Calendar — Panchang Notifier",
+      "subtitle": "Every sacred day, always in your pocket",
+      "icon": "🗓️",
+      "color": "#e07b39",
+      "description": "A beautifully designed mobile app that surfaces all major Hindu calendar events with smart, timely notifications.",
+      "bullets": [
+        "Complete coverage of Ekadashi, Sankashti, Amavasya, Purnima, Navratri, and 50+ annual events",
+        "Location-aware Tithi calculation for accurate sunrise/sunset-based timing",
+        "Custom notification schedules — get reminded 1 day, 1 hour, or morning-of",
+        "Offline-first architecture: full calendar access without internet",
+        "Clean, minimal UI with dark and saffron themes"
+      ]
+    },
+    {
+      "id": 3,
+      "tag": "IN DEV",
+      "status": "dev",
+      "title": "SMS Credit Tracker (SCT)",
+      "subtitle": "Your bank statements, decoded automatically",
+      "icon": "💬",
+      "color": "#00c9a7",
+      "description": "An on-device, privacy-first Android app that reads your bank SMS messages and builds a clean financial summary — no cloud, no data sharing.",
+      "bullets": [
+        "Regex + LLM hybrid engine parses messages from 20+ Indian banks and all major UPI apps",
+        "Auto-categorizes transactions: food, fuel, EMI, subscriptions, and more",
+        "Monthly and weekly spending summaries with visual breakdowns",
+        "100% on-device processing — your data never leaves your phone",
+        "Works with HDFC, SBI, ICICI, Axis, Kotak, PhonePe, GPay, Paytm, and more"
+      ]
+    },
+    {
+      "id": 4,
+      "tag": "PLANNED",
+      "status": "planned",
+      "title": "DataViz Desktop — Private Analytics Engine",
+      "subtitle": "Turn confidential Excel data into living dashboards",
+      "icon": "📊",
+      "color": "#9b59b6",
+      "description": "A desktop application powered by an LLM wrapper that reads your private Excel files and generates dynamic, interactive graphs — no upload, no exposure.",
+      "bullets": [
+        "Drag-and-drop any .xlsx or .csv file — analysis begins instantly on your machine",
+        "LLM interprets your column headers and auto-selects the best chart types",
+        "Generate bar, line, scatter, pie, and waterfall charts from natural language prompts",
+        "Data never leaves your device — fully air-gapped processing pipeline",
+        "Export polished charts to PDF or PNG for presentations and reports"
+      ]
+    }
+  ],
+  "services": {
+    "heading": "What We Can Build For You",
+    "intro": "Obzidian Labs isn't just a product studio — we take on custom builds. If you have a problem worth solving, we have engineers who love solving it. Here's what we bring to the table:",
+    "capabilities": [
+      "Custom browser extensions tailored to your team's internal workflows",
+      "Mobile apps for Android and iOS — from concept to Play Store in weeks",
+      "LLM-powered automation tools that sit on top of your existing data",
+      "Privacy-first desktop applications that process sensitive data entirely on-device",
+      "API integrations, webhook pipelines, and backend microservices",
+      "Data visualization dashboards — interactive, embeddable, and beautiful",
+      "Regex and NLP engines for document parsing, SMS reading, and text extraction",
+      "Rapid prototyping: we move fast and ship MVPs you can actually test"
+    ],
+    "cta": "Have a product idea? Let's talk."
+  }
+}
