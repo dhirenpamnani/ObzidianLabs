@@ -39,7 +39,6 @@
       font-family: 'Exo 2', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
-      cursor: crosshair;
     }
 
     /* ── GRID BACKGROUND ── */
@@ -333,6 +332,240 @@
       height: 2px;
       background: linear-gradient(to right, var(--blue-core), transparent);
       margin-bottom: 48px;
+    }
+
+    /* ══════════════════════════════════════
+       AI CONSULTING SECTION
+    ══════════════════════════════════════ */
+    #ai-consulting {
+      padding: 100px 80px;
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ambient glow blobs */
+    #ai-consulting::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,201,167,0.08) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    #ai-consulting::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,127,212,0.07) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .aic-inner { position: relative; z-index: 1; }
+
+    .aic-header { margin-bottom: 52px; }
+
+    .aic-tagline {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      line-height: 1.8;
+      max-width: 660px;
+      margin-top: 4px;
+    }
+
+    /* ── CARD GRID ── */
+    .aic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 52px;
+    }
+
+    .aic-card {
+      --aic-accent: #1a7fd4;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--aic-accent);
+      padding: 40px 36px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .aic-card:hover {
+      border-color: var(--border-hi);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.35);
+      transform: translateY(-2px);
+    }
+
+    /* coloured top accent glow */
+    .aic-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--aic-accent);
+      box-shadow: 0 0 18px var(--aic-accent);
+      opacity: 0.85;
+    }
+
+    /* ghost number watermark */
+    .aic-card-num {
+      position: absolute;
+      bottom: 16px; right: 24px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 6rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.022);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .aic-card-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .aic-card-icon {
+      font-size: 2.6rem;
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+
+    .aic-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .aic-card-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-prime);
+      line-height: 1.1;
+    }
+
+    .aic-card-subtitle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.64rem;
+      letter-spacing: 0.13em;
+      color: var(--aic-accent);
+      opacity: 0.9;
+    }
+
+    .aic-divider {
+      width: 48px;
+      height: 1px;
+      margin-bottom: 20px;
+      background: linear-gradient(to right, var(--aic-accent), transparent);
+    }
+
+    .aic-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .aic-bullets li {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+    }
+
+    .aic-bullets li::before {
+      content: '▸';
+      color: var(--aic-accent);
+      font-size: 0.7rem;
+      margin-top: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ROW ── */
+    .aic-cta-row { display: flex; justify-content: center; }
+
+    .aic-cta-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      padding: 30px 52px;
+      width: 100%;
+      max-width: 800px;
+      background: rgba(26,127,212,0.06);
+      border: 1px solid rgba(26,127,212,0.2);
+    }
+    .aic-cta-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%; height: 1px;
+      background: linear-gradient(to right, var(--blue-core), transparent);
+    }
+
+    .aic-cta-icon {
+      font-size: 1.5rem;
+      color: var(--accent-z);
+      text-shadow: 0 0 14px var(--accent-z);
+      flex-shrink: 0;
+      animation: zPulse 3s ease-in-out infinite;
+    }
+
+    .aic-cta-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-prime);
+      letter-spacing: 0.03em;
+      flex: 1;
+    }
+
+    /* ── TABLET ≤ 1024px ── */
+    @media (max-width: 1024px) {
+      #ai-consulting { padding: 80px 48px; }
+    }
+
+    /* ── MOBILE ≤ 768px ── */
+    @media (max-width: 768px) {
+      #ai-consulting { padding: 60px 20px; }
+      .aic-header { margin-bottom: 36px; }
+      .aic-tagline { font-size: 0.93rem; }
+      .aic-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 36px; }
+      .aic-card { padding: 28px 20px 24px; }
+      .aic-card:hover { transform: none; }
+      .aic-card-num { font-size: 4.5rem; }
+      .aic-card-icon { font-size: 2rem; }
+      .aic-card-title { font-size: 1.18rem; }
+      .aic-bullets li { font-size: 0.84rem; }
+      .aic-cta-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 18px;
+        padding: 24px 20px;
+      }
+      .aic-cta-text { font-size: 1.05rem; }
+      .aic-cta-box .btn-primary { width: 100%; text-align: center; }
+      .aic-cta-box .corner-dec { display: none; }
+    }
+
+    /* ── SMALL MOBILE ≤ 420px ── */
+    @media (max-width: 420px) {
+      .aic-card-title { font-size: 1.05rem; }
+      .aic-bullets li { font-size: 0.8rem; }
     }
 
     /* ── GALLERY ── */
@@ -1111,6 +1344,7 @@
         OB<span class="z-char">Z</span>IDIAN LABS
       </a>
       <ul class="nav-links">
+        <li><a href="#ai-consulting">AI Consulting</a></li>
         <li><a href="#gallery">Solutions</a></li>
         <li><a href="#products">Products</a></li>
         <li><a href="#services">Services</a></li>
@@ -1125,6 +1359,7 @@
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobile-menu">
       <ul class="mobile-menu-links">
+        <li><a href="#ai-consulting" class="mobile-nav-link">AI Consulting</a></li>
         <li><a href="#gallery" class="mobile-nav-link">Solutions</a></li>
         <li><a href="#products" class="mobile-nav-link">Products</a></li>
         <li><a href="#services" class="mobile-nav-link">Services</a></li>
@@ -1168,6 +1403,36 @@
       </div>
 
       <div class="hero-scroll-hint">Scroll</div>
+    </section>
+
+    <!-- AI CONSULTING -->
+    <section id="ai-consulting">
+      <div class="aic-inner">
+
+        <div class="aic-header reveal">
+          <div class="section-label">Custom AI Services</div>
+          <h2 class="section-heading" id="aic-heading"></h2>
+          <div class="section-rule"></div>
+          <p class="aic-tagline" id="aic-tagline"></p>
+        </div>
+
+        <div class="aic-grid" id="aic-grid">
+          <!-- populated by buildAIConsulting() -->
+        </div>
+
+        <div class="aic-cta-row reveal">
+          <div class="aic-cta-box">
+            <div class="corner-dec tl"></div>
+            <div class="corner-dec tr"></div>
+            <div class="corner-dec bl"></div>
+            <div class="corner-dec br"></div>
+            <span class="aic-cta-icon">✦</span>
+            <p class="aic-cta-text" id="aic-cta"></p>
+            <a href="#contact" class="btn-primary">Talk to Us</a>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <!-- GALLERY -->
@@ -1362,6 +1627,39 @@
           ]
         }
       ],
+      aiConsulting: {
+        heading: "Custom AI Services We Provide",
+        tagline: "We bring AI into your workflow — without compromising your data or your team's time.",
+        cta: "Ready to bring AI into your workflow?",
+        services: [
+          {
+            icon: "📊",
+            title: "Excel AI Dashboard Builder",
+            subtitle: "Intelligent dashboards. Zero data exposure.",
+            color: "#00c9a7",
+            bullets: [
+              "We work exclusively with your Excel column headers — your actual data never gets uploaded, shared, or leaves your system at any point",
+              "Our team designs precision AI prompts based solely on your data structure to create interactive dashboards, pivot charts, and automated templates directly inside Excel",
+              "Ideal for finance, operations, HR, and sales teams dealing with sensitive or confidential spreadsheet data who need powerful reporting without cloud risk",
+              "Delivers fully functional Excel workbooks with slicers, dynamic charts, and conditional formatting — tailored to your exact reporting requirements",
+              "Available as a one-time build or an ongoing dashboard design retainer as your data structure evolves"
+            ]
+          },
+          {
+            icon: "🤖",
+            title: "AI Pipeline Setup & Team Education",
+            subtitle: "Build your company's AI backbone — the right way.",
+            color: "#1a7fd4",
+            bullets: [
+              "We audit your existing workflows and pinpoint where AI can eliminate repetitive tasks, reduce errors, and unlock faster decision-making",
+              "End-to-end AI pipeline design and implementation — from data ingestion and prompt engineering to output delivery, monitoring, and iteration",
+              "Hands-on team training sessions so your staff can confidently adopt and use AI tools in their daily operations without depending on external support",
+              "Technology-agnostic tool selection guidance — we help you pick the right LLMs, automation platforms, and integrations that fit your existing stack and budget",
+              "Ongoing post-implementation support to scale, refine, and future-proof your AI pipelines as your business and data needs grow"
+            ]
+          }
+        ]
+      },
       services: {
         heading: "What We Can Build For You",
         intro: "Obzidian Labs isn't just a product studio — we take on custom builds. If you have a problem worth solving, we have engineers who love solving it. Here's what we bring to the table:",
@@ -1476,6 +1774,30 @@
       }, { passive: true });
     }
 
+    // ── AI CONSULTING ──
+    function buildAIConsulting(ac) {
+      document.getElementById('aic-heading').textContent = ac.heading;
+      document.getElementById('aic-tagline').textContent = ac.tagline;
+      document.getElementById('aic-cta').textContent = ac.cta;
+
+      document.getElementById('aic-grid').innerHTML = ac.services.map((s, i) => `
+        <div class="aic-card reveal" style="--aic-accent: ${s.color};" data-delay="${i * 150}">
+          <div class="aic-card-num">0${i + 1}</div>
+          <div class="aic-card-head">
+            <span class="aic-card-icon">${s.icon}</span>
+            <div class="aic-card-meta">
+              <div class="aic-card-title">${s.title}</div>
+              <div class="aic-card-subtitle">${s.subtitle}</div>
+            </div>
+          </div>
+          <div class="aic-divider"></div>
+          <ul class="aic-bullets">
+            ${s.bullets.map(b => `<li>${b}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+
     // ── PRODUCTS ──
     function buildProducts(products) {
       const grid = document.getElementById('products-grid');
@@ -1585,6 +1907,7 @@
       buildTicker(data);
       typewrite(document.getElementById('hero-tagline'), data.company.tagline, 45);
       buildGallery(data.gallery);
+      buildAIConsulting(data.aiConsulting);
       buildProducts(data.products);
       buildServices(data.services);
       buildFooter(data);

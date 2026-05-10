@@ -115,6 +115,39 @@
       ]
     }
   ],
+  "aiConsulting": {
+    "heading": "AI Consulting Services",
+    "tagline": "We bring AI into your workflow — without compromising your data or your team's time.",
+    "services": [
+      {
+        "icon": "📊",
+        "title": "Excel AI Dashboard Builder",
+        "subtitle": "Intelligent dashboards. Zero data exposure.",
+        "color": "#00c9a7",
+        "bullets": [
+          "We work exclusively with your Excel column headers — your actual data never gets uploaded, shared, or leaves your system at any point",
+          "Our team designs precision AI prompts based solely on your data structure to create interactive dashboards, pivot charts, and automated templates directly inside Excel",
+          "Ideal for finance, operations, HR, and sales teams dealing with sensitive or confidential spreadsheet data who need powerful reporting without cloud risk",
+          "Delivers fully functional Excel workbooks with slicers, dynamic charts, and conditional formatting — tailored to your exact reporting requirements",
+          "Available as a one-time build or an ongoing dashboard design retainer as your data structure evolves"
+        ]
+      },
+      {
+        "icon": "🤖",
+        "title": "AI Pipeline Setup & Team Education",
+        "subtitle": "Build your company's AI backbone — the right way.",
+        "color": "#1a7fd4",
+        "bullets": [
+          "We audit your existing workflows and pinpoint where AI can eliminate repetitive tasks, reduce errors, and unlock faster decision-making",
+          "End-to-end AI pipeline design and implementation — from data ingestion and prompt engineering to output delivery, monitoring, and iteration",
+          "Hands-on team training sessions so your staff can confidently adopt and use AI tools in their daily operations without depending on external support",
+          "Technology-agnostic tool selection guidance — we help you pick the right LLMs, automation platforms, and integrations that fit your existing stack and budget",
+          "Ongoing post-implementation support to scale, refine, and future-proof your AI pipelines as your business and data needs grow"
+        ]
+      }
+    ],
+    "cta": "Ready to bring AI into your workflow?"
+  },
   "services": {
     "heading": "What We Can Build For You",
     "intro": "Obzidian Labs isn't just a product studio — we take on custom builds. If you have a problem worth solving, we will love solving it. Here's what we bring to the table:",
