@@ -10,25 +10,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg-void:    #03060f;
-      --bg-deep:    #060d1f;
-      --bg-panel:   #0a1428;
-      --bg-card:    #0d1a35;
-      --border:     #112244;
-      --border-hi:  #1e3a6e;
-      --blue-core:  #1a7fd4;
-      --blue-glow:  #2196f3;
-      --blue-pale:  #4db8ff;
-      --cyan:       #00c9f0;
-      --grey-mid:   #4a6080;
-      --grey-dim:   #2a3550;
-      --text-prime: #d0e4f7;
-      --text-mid:   #8aaac8;
-      --text-dim:   #4a6080;
-      --accent-z:   #00d4ff;
-      --live:       #00e676;
-      --dev:        #ffc107;
-      --planned:    #7c8fa8;
+      --bg-void:    #0d0b09;
+      --bg-deep:    #131110;
+      --bg-panel:   #1a1714;
+      --bg-card:    #211e1b;
+      --border:     #2d2925;
+      --border-hi:  #3d3530;
+      --blue-core:  #c96442;
+      --blue-glow:  #d97757;
+      --blue-pale:  #e8a07a;
+      --cyan:       #c0a45a;
+      --grey-mid:   #6b5f55;
+      --grey-dim:   #3d3530;
+      --text-prime: #f0ebe4;
+      --text-mid:   #b8a99a;
+      --text-dim:   #7a6f65;
+      --accent-z:   #d97757;
+      --live:       #6bc46d;
+      --dev:        #c0a45a;
+      --planned:    #8a7d73;
     }
 
     html { scroll-behavior: smooth; }
@@ -47,8 +47,8 @@
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(26,127,212,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(26,127,212,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(201,100,66,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201,100,66,0.05) 1px, transparent 1px);
       background-size: 40px 40px;
       pointer-events: none;
       z-index: 0;
@@ -92,7 +92,7 @@
       justify-content: space-between;
       padding: 0 48px;
       height: 64px;
-      background: rgba(3,6,15,0.8);
+      background: rgba(13,11,9,0.82);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
     }
@@ -108,7 +108,7 @@
     }
     .nav-logo .z-char {
       color: var(--accent-z);
-      text-shadow: 0 0 12px var(--accent-z), 0 0 28px rgba(0,212,255,0.4);
+      text-shadow: 0 0 12px var(--accent-z), 0 0 28px rgba(217,119,87,0.45);
     }
 
     .nav-links {
@@ -131,7 +131,7 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.65rem;
       color: var(--accent-z);
-      border: 1px solid rgba(0,212,255,0.3);
+      border: 1px solid rgba(217,119,87,0.35);
       padding: 4px 10px;
       letter-spacing: 0.1em;
     }
@@ -156,7 +156,7 @@
       width: 600px;
       height: 600px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, rgba(26,127,212,0.15) 0%, rgba(0,200,255,0.05) 40%, transparent 70%);
+      background: radial-gradient(circle at center, rgba(201,100,66,0.18) 0%, rgba(217,119,87,0.06) 40%, transparent 70%);
       filter: blur(40px);
       animation: orbPulse 6s ease-in-out infinite;
     }
@@ -195,13 +195,13 @@
     }
     .hero-name .z-char {
       color: var(--accent-z);
-      text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(0,212,255,0.3);
+      text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(217,119,87,0.35);
       display: inline-block;
       animation: zPulse 3s ease-in-out infinite;
     }
     @keyframes zPulse {
-      0%, 100% { text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(0,212,255,0.3); }
-      50% { text-shadow: 0 0 40px var(--accent-z), 0 0 100px rgba(0,212,255,0.5), 0 0 140px rgba(0,212,255,0.2); }
+      0%, 100% { text-shadow: 0 0 20px var(--accent-z), 0 0 60px rgba(217,119,87,0.35); }
+      50% { text-shadow: 0 0 40px var(--accent-z), 0 0 100px rgba(217,119,87,0.5), 0 0 140px rgba(217,119,87,0.22); }
     }
 
     .hero-sub {
@@ -254,7 +254,7 @@
     }
     .btn-primary:hover {
       background: var(--blue-glow);
-      box-shadow: 0 0 24px rgba(33,150,243,0.4);
+      box-shadow: 0 0 24px rgba(201,100,66,0.45);
     }
 
     .btn-ghost {
@@ -353,7 +353,7 @@
       top: -100px; right: -100px;
       width: 480px; height: 480px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(0,201,167,0.08) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(201,100,66,0.09) 0%, transparent 68%);
       pointer-events: none;
     }
     #ai-consulting::after {
@@ -362,7 +362,7 @@
       bottom: -80px; left: -80px;
       width: 380px; height: 380px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(26,127,212,0.07) 0%, transparent 68%);
+      background: radial-gradient(circle, rgba(201,100,66,0.07) 0%, transparent 68%);
       pointer-events: none;
     }
 
@@ -387,7 +387,7 @@
     }
 
     .aic-card {
-      --aic-accent: #1a7fd4;
+      --aic-accent: #c96442;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-top: 2px solid var(--aic-accent);
@@ -506,8 +506,8 @@
       padding: 30px 52px;
       width: 100%;
       max-width: 800px;
-      background: rgba(26,127,212,0.06);
-      border: 1px solid rgba(26,127,212,0.2);
+      background: rgba(201,100,66,0.06);
+      border: 1px solid rgba(201,100,66,0.22);
     }
     .aic-cta-box::after {
       content: '';
@@ -670,7 +670,7 @@
       top: 50%;
       transform: translateY(-50%);
       z-index: 10;
-      background: rgba(6,13,31,0.7);
+      background: rgba(13,11,9,0.72);
       border: 1px solid var(--border-hi);
       color: var(--blue-pale);
       width: 44px;
@@ -683,7 +683,7 @@
       transition: background 0.2s;
       backdrop-filter: blur(8px);
     }
-    .gallery-arrow:hover { background: rgba(26,127,212,0.2); }
+    .gallery-arrow:hover { background: rgba(201,100,66,0.22); }
     .gallery-arrow.left { left: 16px; }
     .gallery-arrow.right { right: 16px; }
 
@@ -855,8 +855,8 @@
     }
 
     .services-cta-block {
-      background: rgba(26,127,212,0.07);
-      border: 1px solid rgba(26,127,212,0.2);
+      background: rgba(201,100,66,0.07);
+      border: 1px solid rgba(201,100,66,0.22);
       padding: 28px 32px;
       position: relative;
       overflow: hidden;
@@ -1139,7 +1139,7 @@
       position: fixed;
       top: 64px;
       left: 0; right: 0;
-      background: rgba(3,6,15,0.97);
+      background: rgba(13,11,9,0.97);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid var(--border);
       z-index: 99;
@@ -1169,13 +1169,13 @@
       border-bottom: 1px solid var(--border);
       transition: color 0.2s, background 0.2s;
     }
-    .mobile-menu-links li a:hover { color: var(--blue-pale); background: rgba(26,127,212,0.05); }
+    .mobile-menu-links li a:hover { color: var(--blue-pale); background: rgba(201,100,66,0.06); }
     .mobile-menu-badge {
       margin: 20px 28px 0;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.6rem;
       color: var(--accent-z);
-      border: 1px solid rgba(0,212,255,0.3);
+      border: 1px solid rgba(217,119,87,0.35);
       padding: 6px 12px;
       display: inline-block;
       letter-spacing: 0.1em;
@@ -1384,7 +1384,7 @@
       <svg class="hex-pattern" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
         <defs>
           <pattern id="hexPat" x="0" y="0" width="60" height="52" patternUnits="userSpaceOnUse">
-            <polygon points="30,2 58,17 58,45 30,52 2,45 2,17" fill="none" stroke="#1a7fd4" stroke-width="0.5"/>
+            <polygon points="30,2 58,17 58,45 30,52 2,45 2,17" fill="none" stroke="#c96442" stroke-width="0.5"/>
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#hexPat)"/>
@@ -1527,35 +1527,35 @@
           id: 1,
           label: "Browser Extension Focus Flow ",
           caption: "To-Do List & Timezone Tracker — Your Daily Work Ritual",
-          color: "#0066ff",
+          color: "#c96442",
           icon: "⚡"
         },
         {
           id: 2,
           label: "Hindu Calendar — Event Notifier",
           caption: "Smart Reminder for all ",
-          color: "#ff6600",
+          color: "#c4874a",
           icon: "🗓️"
         },
         {
           id: 3,
           label: "SMS Credit Tracker",
           caption: "AI-powered financial SMS summarization",
-          color: "#00d4aa",
+          color: "#7a9e7e",
           icon: "💬"
         },
         {
           id: 4,
           label: "Excel Analyzer Desktop App",
           caption: "Smart AI that runs locally for Excel analytics without data leaving your system",
-          color: "#9b59b6",
+          color: "#9b6b8a",
           icon: "📊"
         },
         {
           id: 5,
           label: "Future Tools",
           caption: "More precision tools are being engineered at the lab",
-          color: "#1a7fd4",
+          color: "#b08c6a",
           icon: "⚗️"
         }
       ],
@@ -1567,7 +1567,7 @@
           title: "Browser Extension — Todo & Timezone",
           subtitle: "Productivity wired into your browser",
           icon: "⚡",
-          color: "#1a7fd4",
+          color: "#c96442",
           description: "A sleek, lightweight browser extension that supercharges your daily workflow without ever leaving your tab.",
           bullets: [
             "Inline to-do list with priority tagging and drag-to-reorder — no app switching needed",
@@ -1583,7 +1583,7 @@
           title: "Hindu Calendar — Event Notifier",
           subtitle: "Every sacred day, always in your pocket",
           icon: "🗓️",
-          color: "#e07b39",
+          color: "#c4874a",
           description: "A beautifully designed mobile app that surfaces all major Hindu calendar events with smart, timely notifications.",
           bullets: [
             "Tracks Ekadashi, Sankashti, Amavasya, Purnima, Navratri, and 50+ key observances",
@@ -1599,7 +1599,7 @@
           title: "SMS Credit Tracker (SCT)",
           subtitle: "Your bank statements, summarized automatically",
           icon: "💬",
-          color: "#00c9a7",
+          color: "#7a9e7e",
           description: "An on-device, privacy-first Android app that reads your bank SMS messages and builds a clean financial summary — no cloud, no data sharing.",
           bullets: [
             "Regex + LLM hybrid engine parses messages from 20+ Indian banks and all major UPI apps",
@@ -1616,7 +1616,7 @@
           title: "Excel Analyzer Desktop App",
           subtitle: "Turn confidential Excel data into living dashboards",
           icon: "📊",
-          color: "#9b59b6",
+          color: "#9b6b8a",
           description: "A desktop application powered by an LLM wrapper that reads your private Excel files and generates dynamic, interactive graphs — no data upload, no exposure.",
           bullets: [
             "Drag-and-drop any .xlsx or .csv file — analysis begins instantly on your machine",
@@ -1636,7 +1636,7 @@
             icon: "📊",
             title: "Excel AI Dashboard Builder",
             subtitle: "Intelligent dashboards. Zero data exposure.",
-            color: "#00c9a7",
+            color: "#7a9e7e",
             bullets: [
               "We work exclusively with your Excel column headers — your actual data never gets uploaded, shared, or leaves your system at any point",
               "Our team designs precision AI prompts based solely on your data structure to create interactive dashboards, pivot charts, and automated templates directly inside Excel",
@@ -1649,7 +1649,7 @@
             icon: "🤖",
             title: "AI Pipeline Setup & Team Education",
             subtitle: "Build your company's AI backbone — the right way.",
-            color: "#1a7fd4",
+            color: "#c96442",
             bullets: [
               "We audit your existing workflows and pinpoint where AI can eliminate repetitive tasks, reduce errors, and unlock faster decision-making",
               "End-to-end AI pipeline design and implementation — from data ingestion and prompt engineering to output delivery, monitoring, and iteration",
@@ -1713,7 +1713,7 @@
       let progressEl = document.getElementById('gallery-progress');
 
       track.innerHTML = slides.map(s => `
-        <div class="gallery-slide" style="background: radial-gradient(ellipse at 60% 50%, ${s.color}22 0%, #030914 70%);">
+        <div class="gallery-slide" style="background: radial-gradient(ellipse at 60% 50%, ${s.color}22 0%, #100d0a 70%);">
           <div class="gallery-bg">
             <svg class="gallery-hex-grid" viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
               <defs>

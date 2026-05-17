@@ -15,35 +15,35 @@
       "id": 1,
       "label": "Browser Extension Focus Flow ",
       "caption": "To-Do List & Timezone Tracker — Your Daily Work Ritual",
-      "color": "#0066ff",
+      "color": "#c96442",
       "icon": "⚡"
     },
     {
       "id": 2,
       "label": "Hindu Calendar — Event Notifier",
       "caption": "Smart Reminder for all ",
-      "color": "#ff6600",
+      "color": "#c4874a",
       "icon": "🗓️"
     },
     {
       "id": 3,
       "label": "SMS Credit Tracker",
       "caption": "AI-powered financial SMS summarization",
-      "color": "#00d4aa",
+      "color": "#7a9e7e",
       "icon": "💬"
     },
     {
       "id": 4,
       "label": "Excel Analyzer Desktop App",
       "caption": "Smart AI that runs locally for Excel analytics without data leaving your system",
-      "color": "#9b59b6",
+      "color": "#9b6b8a",
       "icon": "📊"
     },
     {
       "id": 5,
       "label": "Future Tools",
       "caption": "More precision tools are being engineered at the lab",
-      "color": "#1a7fd4",
+      "color": "#b08c6a",
       "icon": "⚗️"
     }
   ],
@@ -55,7 +55,7 @@
       "title": "Browser Extension — Todo & Timezone",
       "subtitle": "Productivity wired into your browser",
       "icon": "⚡",
-      "color": "#1a7fd4",
+      "color": "#c96442",
       "description": "A sleek, lightweight browser extension that supercharges your daily workflow without ever leaving your tab.",
       "bullets": [
         "Inline to-do list with priority tagging and drag-to-reorder — no app switching needed",
@@ -71,7 +71,7 @@
       "title": "Hindu Calendar — Event Notifier",
       "subtitle": "Every sacred day, always in your pocket",
       "icon": "🗓️",
-      "color": "#e07b39",
+      "color": "#c4874a",
       "description": "A beautifully designed mobile app that surfaces all major Hindu calendar events with smart, timely notifications.",
       "bullets": [
         "Tracks Ekadashi, Sankashti, Amavasya, Purnima, Navratri, and 50+ key observances",
@@ -87,7 +87,7 @@
       "title": "SMS Credit Tracker (SCT)",
       "subtitle": "Your bank statements, summarized automatically",
       "icon": "💬",
-      "color": "#00c9a7",
+      "color": "#7a9e7e",
       "description": "An on-device, privacy-first Android app that reads your bank SMS messages and builds a clean financial summary — no cloud, no data sharing.",
       "bullets": [
         "Regex + LLM hybrid engine parses messages from 20+ Indian banks and all major UPI apps",
@@ -104,7 +104,7 @@
       "title": "Excel Analyzer Desktop App",
       "subtitle": "Turn confidential Excel data into living dashboards",
       "icon": "📊",
-      "color": "#9b59b6",
+      "color": "#9b6b8a",
       "description": "A desktop application powered by an LLM wrapper that reads your private Excel files and generates dynamic, interactive graphs — no data upload, no exposure.",
       "bullets": [
         "Drag-and-drop any .xlsx or .csv file — analysis begins instantly on your machine",
@@ -123,7 +123,7 @@
         "icon": "📊",
         "title": "Excel AI Dashboard Builder",
         "subtitle": "Intelligent dashboards. Zero data exposure.",
-        "color": "#00c9a7",
+        "color": "#7a9e7e",
         "bullets": [
           "We work exclusively with your Excel column headers — your actual data never gets uploaded, shared, or leaves your system at any point",
           "Our team designs precision AI prompts based solely on your data structure to create interactive dashboards, pivot charts, and automated templates directly inside Excel",
@@ -136,7 +136,7 @@
         "icon": "🤖",
         "title": "AI Pipeline Setup & Team Education",
         "subtitle": "Build your company's AI backbone — the right way.",
-        "color": "#1a7fd4",
+        "color": "#c96442",
         "bullets": [
           "We audit your existing workflows and pinpoint where AI can eliminate repetitive tasks, reduce errors, and unlock faster decision-making",
           "End-to-end AI pipeline design and implementation — from data ingestion and prompt engineering to output delivery, monitoring, and iteration",
