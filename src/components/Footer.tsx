@@ -14,7 +14,7 @@ export default function Footer() {
               <div className="flex items-center gap-2.5">
                 <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-black ring-1 ring-white/10">
                   <img
-                    src="/OZ_logo.png"
+                    src="./OZ_logo.png"
                     alt="Obzidian Labs"
                     className="h-full w-full scale-[1.55] object-contain object-[50%_38%]"
                   />

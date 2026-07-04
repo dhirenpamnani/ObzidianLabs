@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 const FRAME_COUNT = 26;
 const START_DELAY_MS = 2000;
 const PASS_DURATION_MS = 2000; // one forward sweep; round trip (there + back) is well under the original 5s clip
-const frameSrc = (i: number) => `/frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
+const frameSrc = (i: number) => `./frames/ezgif-frame-${String(i).padStart(3, "0")}.jpg`;
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);

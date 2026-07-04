@@ -33,7 +33,7 @@ export default function Navbar() {
       >
         <a href="#top" className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-black ring-1 ring-white/10">
-            <img src="/OZ_logo.png" alt="Obzidian Labs" className="h-full w-full scale-[1.55] object-contain object-[50%_38%]" />
+            <img src="./OZ_logo.png" alt="Obzidian Labs" className="h-full w-full scale-[1.55] object-contain object-[50%_38%]" />
           </span>
           <span className="font-heading text-[15px] font-semibold tracking-wide text-white">
             OBZIDIAN <span className="text-ember-400">LABS</span>
