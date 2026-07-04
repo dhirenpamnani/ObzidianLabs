@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  --color-obsidian: #060504;
+  --color-obsidian-soft: #0e0b09;
+  --color-ember-50: #fff8f1;
+  --color-ember-100: #ffecd9;
+  --color-ember-200: #ffd4a8;
+  --color-ember-300: #ffb066;
+  --color-ember-400: #ff9433;
+  --color-ember-500: #f97316;
+  --color-ember-600: #ea580c;
+  --color-ember-700: #c2410c;
+  --color-ember-800: #9a3412;
+  --color-ember-900: #7c2d12;
+  --color-ink-900: #1c1917;
+  --color-ink-700: #44403c;
+  --color-ink-500: #78716c;
+
+  --animate-marquee: marquee 40s linear infinite;
+}
+
+@layer base {
+  * {
+    @apply border-ember-100;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ember-50 text-ink-900 font-sans antialiased;
+    font-size: 16px;
+  }
+
+  ::selection {
+    @apply bg-ember-400/30 text-ember-900;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-ember-300);
+    border-radius: 999px;
+  }
+}
+
+@layer utilities {
+  .glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/60 shadow-[0_8px_32px_-8px_rgba(234,88,12,0.15)];
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.6)];
+  }
+
+  .text-gradient-ember {
+    background: linear-gradient(135deg, #ff9433 0%, #f97316 45%, #ea580c 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
