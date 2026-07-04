@@ -161,7 +161,7 @@ export default function Hero() {
           onMouseLeave={() => {
             isPausedRef.current = false;
           }}
-          className="absolute inset-0 z-20 m-auto aspect-video w-full max-w-[960px] max-h-[80vh]"
+          className="absolute inset-0 z-20 m-auto aspect-square w-[40%] max-w-[400px]"
         />
       )}
 
