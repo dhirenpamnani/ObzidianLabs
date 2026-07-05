@@ -1,8 +1,6 @@
 import { Mail, Phone, Sparkles } from "lucide-react";
 
 export default function Footer() {
-  const year = new Date().getFullYear();
-
   return (
     <footer id="contact" className="relative bg-obsidian">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent to-black/40" />
@@ -53,7 +51,7 @@ export default function Footer() {
 
           <div className="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row">
             <p className="text-xs text-white/35">
-              
+
             </p>
             <p className="flex items-center gap-1.5 text-xs text-white/40">
               Powered by
