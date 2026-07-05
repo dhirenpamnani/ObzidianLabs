@@ -53,7 +53,7 @@ export default function Footer() {
 
           <div className="mt-10 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row">
             <p className="text-xs text-white/35">
-              © {year} Obzidian Labs. All rights reserved.
+              
             </p>
             <p className="flex items-center gap-1.5 text-xs text-white/40">
               Powered by

@@ -18,7 +18,7 @@ const SERVICES: Service[] = [
     icon: Code2,
     title: "Custom Software",
     description:
-      "Bespoke software builds engineered around your exact business workflows, not the other way around.",
+      "Custom software built to match your business needs, helping you work faster, smarter, and more efficiently.",
   },
   {
     icon: BrainCircuit,

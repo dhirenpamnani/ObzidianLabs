@@ -207,9 +207,10 @@ export default function NeuralVortex() {
             Intelligence, woven into every workflow.
           </h2>
           <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
-            Behind every polished interface we build sits a system that thinks — automations
-            that route themselves, agents that reason, models that speak your business's
-            language. This is what it looks like when AI stops being a feature and becomes
+           Behind every solution we build is a focus on solving real business problems - 
+           from custom 3D websites and tailored software systems to AI-powered n8n workflows that 
+           automate repetitive tasks and improve efficiency. 
+           This is what it looks like when AI stops being a feature and becomes
             the engine.
           </p>
           <a
